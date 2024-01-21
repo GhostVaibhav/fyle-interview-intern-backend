@@ -22,6 +22,9 @@ def list_assignments(p):
 @decorators.authenticate_principal
 def upsert_assignment(p, incoming_payload):
     """Create or Edit an assignment"""
+    if incoming_payload["content"] is None:
+        return "Record should not be null", 400
+    
     assignment = AssignmentSchema().load(incoming_payload)
     assignment.student_id = p.student_id
 
